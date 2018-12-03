@@ -72,9 +72,7 @@ LED_INIT
 		
 		BX	LR	; FIN du sous programme d'init.
 
-;Enable PWM0 (bit 0) et PWM2 (bit 2) p1145 
-;Attention ici c'est les sorties PWM0 et PWM2
-;qu'on controle, pas les blocks PWM0 et PWM1!!!
+
 LED_DROIT_ON
 		;Enable sortie PWM0 (bit 0), p1145 
 		ldr r2,[r7]

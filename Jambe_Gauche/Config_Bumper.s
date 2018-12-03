@@ -61,10 +61,7 @@ DUREE   			EQU     0x002FFFFF
 
 
 BUMPER_INIT	
-		;^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^CONFIGURATION Bumper 1 et 2
-
-				; ;; Enable the Port F & D peripheral clock 		(p291 datasheet de lm3s9B96.pdf)
-		; ;;									
+		;; Init de l'horloge						
 		ldr r8, = SYSCTL_PERIPH_GPIO  			;; RCGC2
 		ldr	r0, [r8]
         ORR	r0, #0x00000030   ;;bit 20 = PWM recoit clock: ON (p271) 
@@ -96,22 +93,19 @@ BUMPER_INIT
 		
 		BX LR
 
-;Enable PWM0 (bit 0) et PWM2 (bit 2) p1145 
-;Attention ici c'est les sorties PWM0 et PWM2
-;qu'on controle, pas les blocks PWM0 et PWM1!!!
+;Permet de savoir si le bumper est actif, si oui on renvoi vers BUMPER_DROIT_ACTIF
 BUMPER_DROIT_VERIF
-		;Enable sortie PWM0 (bit 0), p1145 
 		ldr r1,[r8]
 		CMP r1,#BUMP_GAUCHE
+		; Si active, va vers la fonction ACTIF (fait toutes les actions car le bumper a été activer)
 		BEQ BUMPER_DROIT_ACTIF
 		CMP r2,#VERIF
 		MOV r2,#0x0
 		BEQ start
 		BX	LR
 		
+;Permet de savoir si le bumper est actif, si oui on renvoi vers BUMPER_GAUCHE_ACTIF		
 BUMPER_GAUCHE_VERIF
-		;Enable sortie PWM0 (bit 0), p1145 
-
 		ldr r1,[r8]
 		CMP r1,#BUMP_DROIT
 		BEQ BUMPER_GAUCHE_ACTIF
@@ -119,7 +113,8 @@ BUMPER_GAUCHE_VERIF
 		MOV r2,#0x0
 		BEQ start
 		BX	LR
-	
+
+;Trois phases, marche arrière 1 temps, demi-tour puis encore marche arrière 1 temps et repart comme un start		
 BUMPER_DROIT_ACTIF
 		BL	LED_GAUCHE_OFF
 		BL	LED_DROIT_ON
@@ -134,7 +129,8 @@ BUMPER_DROIT_ACTIF
 		BL WAITS2
 		MOV r2,#0x120
 		B	BUMPER_DROIT_VERIF
-		
+
+;Deux phases, demi-tour puis arret pendant 2 temps (le temps que le deuxième evalbot finissent sa manoeuvre) et repart comme un start
 BUMPER_GAUCHE_ACTIF
 		BL	LED_GAUCHE_ON
 		BL	LED_DROIT_OFF

@@ -19,7 +19,7 @@ GPIO_O_DEN  		EQU 	0x0000051C  ; GPIO Digital Enable (p437 datasheet de lm3s9B92
 ; Pul_up
 GPIO_I_PUR   		EQU 	0x00000510  ; GPIO Digital Enable (p437 datasheet de lm3s9B92.pdf)
 
-; Broches select
+; Adresse des Broches
 
 BOUTTON_DROIT			EQU 	0x40
 
@@ -30,7 +30,7 @@ BOUTTON_TOUS		EQU 	0xC0
 VERIF 				EQU		0x120
 
 
-; Durée du clignotement
+; Import
 DUREE   			EQU     0x002FFFFF
 						
 						
@@ -62,44 +62,39 @@ DUREE   			EQU     0x002FFFFF
 		IMPORT	loop
 
 
-BOUTTON_INIT
-		; ;; Enable the Port F & D peripheral clock 		(p291 datasheet de lm3s9B96.pdf)
-		; ;;									
-		ldr r9, = SYSCTL_PERIPH_GPIO  			;; RCGC2
+BOUTTON_INIT				
+		;; Mise en place de l'horloge
+		ldr r9, = SYSCTL_PERIPH_GPIO
 		ldr	r0, [r9]
-        ORR	r0, #0x00000028   ;;bit 20 = PWM recoit clock: ON (p271) 
+        ORR	r0, #0x00000028
         str r0, [r9]
 		
-		; ;; "There must be a delay of 3 system clocks before any GPIO reg. access  (p413 datasheet de lm3s9B92.pdf)
-		nop	   									;; tres tres important....
+		nop
 		nop	   
-		nop	   									;; pas necessaire en simu ou en debbug step by step...
+		nop
 
 		
 		
 		
-		;^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^CONFIGURATION Bumper 1 et 2
+		;^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^CONFIGURATION Bouton 1 et 2
 
 		ldr r0, = BOUTTON_TOUS
-		ldr r9, = GPIO_PORTD_BASE+GPIO_I_PUR	;; Pul_up 		
+		ldr r9, = GPIO_PORTD_BASE+GPIO_I_PUR	
         str r0, [r9]
 		
-		ldr r9, = GPIO_PORTD_BASE+GPIO_O_DEN	;; Enable Digital Function 	
+		ldr r9, = GPIO_PORTD_BASE+GPIO_O_DEN
         str r0, [r9]     
 		
 		ldr r9, = GPIO_PORTD_BASE + (BOUTTON_TOUS<<2)
 		
 		;ldr r9, = GPIO_PORTD_BASE + (BROCHE7<<2)
 		
-		;vvvvvvvvvvvvvvvvvvvvvvvFin configuration Switcher 
+		;vvvvvvvvvvvvvvvvvvvvvvvFin configuration Bouton
 		
 		BX LR
 
-;Enable PWM0 (bit 0) et PWM2 (bit 2) p1145 
-;Attention ici c'est les sorties PWM0 et PWM2
-;qu'on controle, pas les blocks PWM0 et PWM1!!!
+;Permet de savoir si le bouton est actif, si oui on renvoi vers BOUTTON_DROIT_ACTIF
 BOUTTON_DROIT_VERIF
-		;Enable sortie PWM0 (bit 0), p1145 
 		ldr r1,[r9]
 		CMP r1,#BOUTTON_GAUCHE
 		BEQ BOUTTON_DROIT_ACTIF
@@ -108,8 +103,8 @@ BOUTTON_DROIT_VERIF
 		BEQ loop
 		BX	LR
 		
+;Permet de savoir si le bouton est actif, si oui on renvoi vers BOUTTON_GAUCHE_ACTIF
 BOUTTON_GAUCHE_VERIF
-		;Enable sortie PWM0 (bit 0), p1145 
 		ldr r1,[r9]
 		CMP r1,#BOUTTON_DROIT
 		BEQ BOUTTON_GAUCHE_ACTIF
@@ -118,12 +113,14 @@ BOUTTON_GAUCHE_VERIF
 		BEQ loop
 		BX	LR
 	
+;Modifie le registre R11 qui gère la vitesse des moteurs
 BOUTTON_DROIT_ACTIF
 		mov r11,#0x179
 		MOV r2,#0x120
 		BL  MOTEUR_INIT
 		B	BOUTTON_DROIT_VERIF
 		
+;Modifie le registre R11 qui gère la vitesse des moteurs	
 BOUTTON_GAUCHE_ACTIF
 		mov r11,#0x160
 		MOV r2,#0x120

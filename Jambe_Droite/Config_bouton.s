@@ -97,7 +97,6 @@ BOUTTON_INIT
 
 ;Permet de savoir si le bouton est actif, si oui on renvoi vers BOUTTON_DROIT_ACTIF
 BOUTTON_DROIT_VERIF
-		;Enable sortie PWM0 (bit 0), p1145 
 		ldr r1,[r9]
 		CMP r1,#BOUTTON_GAUCHE
 		BEQ BOUTTON_DROIT_ACTIF
@@ -108,7 +107,6 @@ BOUTTON_DROIT_VERIF
 		
 ;Permet de savoir si le bouton est actif, si oui on renvoi vers BOUTTON_GAUCHE_ACTIF
 BOUTTON_GAUCHE_VERIF
-		;Enable sortie PWM0 (bit 0), p1145 
 		ldr r1,[r9]
 		CMP r1,#BOUTTON_DROIT
 		BEQ BOUTTON_GAUCHE_ACTIF
