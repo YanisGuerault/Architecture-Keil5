@@ -1,9 +1,3 @@
-; M. Akil, T. Grandpierre, R. Kachouri : département IT - ESIEE Paris -
-; 01/2013 - Evalbot (Cortex M3 de Texas Instrument)
-; programme - Pilotage 2 Moteurs Evalbot par PWM tout en ASM (Evalbot tourne sur lui même)
-
-
-
 		AREA    |.text|, CODE, READONLY
 		ENTRY
 		EXPORT	__main
@@ -46,9 +40,9 @@
 __main	
 
 
-		;; BL Branchement vers un lien (sous programme)
+		;; Ajout de la vitesse dans le registre 11 avant la configuration des moteurs
 		mov r11,#0x172
-		; Configure les PWM + GPIO
+		; Initialisation des configurations de tous les composants
 		BL	LED_INIT
 		BL	BUMPER_INIT
 		BL	BOUTTON_INIT
@@ -61,12 +55,12 @@ start
 		BL MOTEUR_GAUCHE_AVANT
 		BL	MOTEUR_DROIT_ON
 		BL	MOTEUR_GAUCHE_ON
+		; Permet de renvoyer au bon endroit après la fin du wait (bx lr ne fonctionne pas car on verifie en temps réel si il y une touche sur un bumper ou un boutton)
 		MOV r5,#0x150
 		BL 	WAIT
 
 ;; Phase 2 -> Avance un temps
 loop	
-		; Evalbot avance droit devant
 		BL	LED_GAUCHE_OFF
 		BL	LED_DROIT_ON
 		BL MOTEUR_DROIT_AVANT
@@ -75,9 +69,8 @@ loop
 		BL	MOTEUR_GAUCHE_ON
 		BL	LED_DROIT_ON
 		BL	LED_GAUCHE_OFF
+		; Permet de renvoyer au bon endroit après la fin du wait (bx lr ne fonctionne pas car on verifie en temps réel si il y une touche sur un bumper ou un boutton)
 		MOV R5,#0x150
-		
-		; Avancement pendant une période (deux WAIT)
 		BL  WAIT2
 ;; Phase 3 -> S'arrete un temps
 loop2		
