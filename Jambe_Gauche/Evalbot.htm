@@ -3,7 +3,7 @@
 <title>Static Call Graph - [.\Evalbot.axf]</title></head>
 <body><HR>
 <H1>Static Call Graph for image .\Evalbot.axf</H1><HR>
-<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 5060528: Last Updated: Fri Nov 30 15:56:08 2018
+<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 5060528: Last Updated: Tue Dec 04 11:43:15 2018
 <BR><P>
 <H3>Maximum Stack Usage =          0 bytes + Unknown(Functions without stacksize, Cycles, Untraceable Function Pointers)</H3><H3>
 Call chain for Maximum Stack Depth:</H3>
@@ -40,6 +40,7 @@ Functions with no stack information
  <LI><a href="#[9]">__main</a>
  <LI><a href="#[1e]">start</a>
  <LI><a href="#[1f]">loop</a>
+ <LI><a href="#[20]">wait1</a>
  <LI><a href="#[1]">NmiSR</a>
  <LI><a href="#[2]">FaultISR</a>
  <LI><a href="#[3]">IntDefaultHandler</a>
@@ -52,8 +53,9 @@ Mutually Recursive functions
  <LI><a href="#[2]">FaultISR</a>&nbsp;&nbsp;&nbsp;&rArr;&nbsp;&nbsp;&nbsp;<a href="#[2]">FaultISR</a><BR>
  <LI><a href="#[3]">IntDefaultHandler</a>&nbsp;&nbsp;&nbsp;&rArr;&nbsp;&nbsp;&nbsp;<a href="#[3]">IntDefaultHandler</a><BR>
  <LI><a href="#[1d]">BUMPER_GAUCHE_VERIF</a>&nbsp;&nbsp;&nbsp;&rArr;&nbsp;&nbsp;&nbsp;<a href="#[1d]">BUMPER_GAUCHE_VERIF</a><BR>
- <LI><a href="#[1f]">loop</a>&nbsp;&nbsp;&nbsp;&rArr;&nbsp;&nbsp;&nbsp;<a href="#[1f]">loop</a><BR>
- <LI><a href="#[1b]">BOUTTON_GAUCHE_VERIF</a>&nbsp;&nbsp;&nbsp;&rArr;&nbsp;&nbsp;&nbsp;<a href="#[1f]">loop</a><BR>
+ <LI><a href="#[20]">wait1</a>&nbsp;&nbsp;&nbsp;&rArr;&nbsp;&nbsp;&nbsp;<a href="#[20]">wait1</a><BR>
+ <LI><a href="#[1f]">loop</a>&nbsp;&nbsp;&nbsp;&rArr;&nbsp;&nbsp;&nbsp;<a href="#[20]">wait1</a><BR>
+ <LI><a href="#[1b]">BOUTTON_GAUCHE_VERIF</a>&nbsp;&nbsp;&nbsp;&rArr;&nbsp;&nbsp;&nbsp;<a href="#[20]">wait1</a><BR>
 </UL>
 <P>
 <H3>
@@ -106,6 +108,7 @@ Global Symbols
 <P><STRONG><a name="[f]"></a>MOTEUR_DROIT_AVANT</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, rk_moteur.o(.text), UNUSED, KEPT)
 <BR><BR>[Called By]<UL><LI><a href="#[1d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;BUMPER_GAUCHE_VERIF
 <LI><a href="#[1f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;loop
+<LI><a href="#[1b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;BOUTTON_GAUCHE_VERIF
 </UL>
 
 <P><STRONG><a name="[10]"></a>MOTEUR_GAUCHE_ARRIERE</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, rk_moteur.o(.text), UNUSED, KEPT)
@@ -115,6 +118,7 @@ Global Symbols
 <P><STRONG><a name="[11]"></a>MOTEUR_GAUCHE_AVANT</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, rk_moteur.o(.text), UNUSED, KEPT)
 <BR><BR>[Called By]<UL><LI><a href="#[1d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;BUMPER_GAUCHE_VERIF
 <LI><a href="#[1f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;loop
+<LI><a href="#[1b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;BOUTTON_GAUCHE_VERIF
 </UL>
 
 <P><STRONG><a name="[12]"></a>MOTEUR_DROIT_INVERSE</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, rk_moteur.o(.text), UNUSED, KEPT)
@@ -154,18 +158,20 @@ Global Symbols
 </UL>
 
 <P><STRONG><a name="[1a]"></a>BOUTTON_DROIT_VERIF</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, config_bouton.o(.text), UNUSED, KEPT)
-<BR><BR>[Calls]<UL><LI><a href="#[1f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;loop
+<BR><BR>[Calls]<UL><LI><a href="#[20]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;wait1
 </UL>
-<BR>[Called By]<UL><LI><a href="#[1f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;loop
+<BR>[Called By]<UL><LI><a href="#[20]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;wait1
 <LI><a href="#[1b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;BOUTTON_GAUCHE_VERIF
 </UL>
 
 <P><STRONG><a name="[1b]"></a>BOUTTON_GAUCHE_VERIF</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, config_bouton.o(.text), UNUSED, KEPT)
-<BR><BR>[Calls]<UL><LI><a href="#[1f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;loop
+<BR><BR>[Calls]<UL><LI><a href="#[20]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;wait1
 <LI><a href="#[1a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;BOUTTON_DROIT_VERIF
+<LI><a href="#[11]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;MOTEUR_GAUCHE_AVANT
+<LI><a href="#[f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;MOTEUR_DROIT_AVANT
 <LI><a href="#[5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;MOTEUR_INIT
 </UL>
-<BR>[Called By]<UL><LI><a href="#[1f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;loop
+<BR>[Called By]<UL><LI><a href="#[20]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;wait1
 </UL>
 
 <P><STRONG><a name="[8]"></a>BUMPER_INIT</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, config_bumper.o(.text))
@@ -176,7 +182,7 @@ Global Symbols
 <BR><BR>[Calls]<UL><LI><a href="#[1e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;start
 </UL>
 <BR>[Called By]<UL><LI><a href="#[1d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;BUMPER_GAUCHE_VERIF
-<LI><a href="#[1f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;loop
+<LI><a href="#[20]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;wait1
 </UL>
 
 <P><STRONG><a name="[1d]"></a>BUMPER_GAUCHE_VERIF</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, config_bumper.o(.text), UNUSED, KEPT)
@@ -197,7 +203,7 @@ Global Symbols
 <LI><a href="#[a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;MOTEUR_DROIT_ON
 </UL>
 <BR>[Called By]<UL><LI><a href="#[1d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;BUMPER_GAUCHE_VERIF
-<LI><a href="#[1f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;loop
+<LI><a href="#[20]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;wait1
 </UL>
 
 <P><STRONG><a name="[9]"></a>__main</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, jambe_gauche.o(.text))
@@ -218,11 +224,8 @@ Global Symbols
 </UL>
 
 <P><STRONG><a name="[1f]"></a>loop</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, jambe_gauche.o(.text), UNUSED, KEPT)
-<BR><BR>[Calls]<UL><LI><a href="#[1d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;BUMPER_GAUCHE_VERIF
-<LI><a href="#[1c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;BUMPER_DROIT_VERIF
+<BR><BR>[Calls]<UL><LI><a href="#[20]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;wait1
 <LI><a href="#[1f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;loop
-<LI><a href="#[1b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;BOUTTON_GAUCHE_VERIF
-<LI><a href="#[1a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;BOUTTON_DROIT_VERIF
 <LI><a href="#[17]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LED_GAUCHE_OFF
 <LI><a href="#[16]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LED_DROIT_OFF
 <LI><a href="#[15]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LED_GAUCHE_ON
@@ -234,7 +237,20 @@ Global Symbols
 <LI><a href="#[b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;MOTEUR_DROIT_OFF
 <LI><a href="#[a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;MOTEUR_DROIT_ON
 </UL>
-<BR>[Called By]<UL><LI><a href="#[1f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;loop
+<BR>[Called By]<UL><LI><a href="#[20]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;wait1
+<LI><a href="#[1f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;loop
+</UL>
+
+<P><STRONG><a name="[20]"></a>wait1</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, jambe_gauche.o(.text), UNUSED, KEPT)
+<BR><BR>[Calls]<UL><LI><a href="#[1d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;BUMPER_GAUCHE_VERIF
+<LI><a href="#[1c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;BUMPER_DROIT_VERIF
+<LI><a href="#[20]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;wait1
+<LI><a href="#[1f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;loop
+<LI><a href="#[1b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;BOUTTON_GAUCHE_VERIF
+<LI><a href="#[1a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;BOUTTON_DROIT_VERIF
+</UL>
+<BR>[Called By]<UL><LI><a href="#[20]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;wait1
+<LI><a href="#[1f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;loop
 <LI><a href="#[1b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;BOUTTON_GAUCHE_VERIF
 <LI><a href="#[1a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;BOUTTON_DROIT_VERIF
 </UL>

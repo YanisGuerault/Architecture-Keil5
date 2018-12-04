@@ -60,7 +60,7 @@ DUREE   			EQU     0x002FFFFF
 		IMPORT	LED_GAUCHE_OFF
 		IMPORT  LED_DROIT_OFF
 		IMPORT	loop
-
+		IMPORT	wait1
 
 BOUTTON_INIT				
 		;; Mise en place de l'horloge
@@ -100,7 +100,7 @@ BOUTTON_DROIT_VERIF
 		BEQ BOUTTON_DROIT_ACTIF
 		CMP r2,#VERIF
 		MOV r2,#0x0
-		BEQ loop
+		BEQ wait1
 		BX	LR
 		
 ;Permet de savoir si le bouton est actif, si oui on renvoi vers BOUTTON_GAUCHE_ACTIF
@@ -110,7 +110,7 @@ BOUTTON_GAUCHE_VERIF
 		BEQ BOUTTON_GAUCHE_ACTIF
 		CMP r2,#VERIF
 		MOV r2,#0x0
-		BEQ loop
+		BEQ wait1
 		BX	LR
 	
 ;Modifie le registre R11 qui gère la vitesse des moteurs
@@ -118,6 +118,8 @@ BOUTTON_DROIT_ACTIF
 		mov r11,#0x179
 		MOV r2,#0x120
 		BL  MOTEUR_INIT
+		BL	MOTEUR_DROIT_AVANT
+		BL	MOTEUR_GAUCHE_AVANT
 		B	BOUTTON_DROIT_VERIF
 		
 ;Modifie le registre R11 qui gère la vitesse des moteurs	
@@ -125,6 +127,8 @@ BOUTTON_GAUCHE_ACTIF
 		mov r11,#0x160
 		MOV r2,#0x120
 		BL  MOTEUR_INIT
+		BL	MOTEUR_DROIT_AVANT
+		BL	MOTEUR_GAUCHE_AVANT
 		B	BOUTTON_DROIT_VERIF
 
 		END

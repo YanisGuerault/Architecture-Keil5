@@ -35,6 +35,7 @@
 		
 		EXPORT  start
 		EXPORT  loop
+		EXPORT	wait1
 
 
 __main	

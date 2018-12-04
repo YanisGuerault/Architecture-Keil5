@@ -142,50 +142,48 @@ ARM Macro Assembler    Page 3
    73 00000026 4770            BX               LR          ; FIN du sous progr
                                                             amme d'init.
    74 00000028         
-   75 00000028         ;Enable PWM0 (bit 0) et PWM2 (bit 2) p1145 
-   76 00000028         ;Attention ici c'est les sorties PWM0 et PWM2
-   77 00000028         ;qu'on controle, pas les blocks PWM0 et PWM1!!!
-   78 00000028         LED_DROIT_ON
-   79 00000028         ;Enable sortie PWM0 (bit 0), p1145 
-   80 00000028 683A            ldr              r2,[r7]
-   81 0000002A F042 0210       ORR              r2,#LED_DROITE
-   82 0000002E 603A            str              r2,[r7]
-   83 00000030 4770            BX               LR
-   84 00000032         
-   85 00000032         LED_GAUCHE_ON
-   86 00000032         ;Enable sortie PWM0 (bit 0), p1145 
-   87 00000032 683A            ldr              r2,[r7]
-   88 00000034 F042 0220       ORR              r2,#LED_GAUCHE
-   89 00000038 603A            str              r2,[r7]
-   90 0000003A 4770            BX               LR
-   91 0000003C         
-   92 0000003C         LED_DROIT_OFF
-   93 0000003C         ;Enable sortie PWM0 (bit 0), p1145 
-   94 0000003C 683A            ldr              r2,[r7]
-   95 0000003E F002 0220       AND              r2,#LED_GAUCHE
-   96 00000042 603A            str              r2,[r7]
-   97 00000044 4770            BX               LR
-   98 00000046         
-   99 00000046         LED_GAUCHE_OFF
-  100 00000046         ;Enable sortie PWM0 (bit 0), p1145 
-  101 00000046 683A            ldr              r2,[r7]
-  102 00000048 F002 0210       AND              r2,#LED_DROITE
-  103 0000004C 603A            str              r2,[r7]
-  104 0000004E 4770            BX               LR
-  105 00000050         
-  106 00000050         LED_DROIT_INVERSE
-  107 00000050 683A            ldr              r2,[r7]
-  108 00000052 F082 0210       EOR              r2,#LED_DROITE
-  109 00000056 603A            str              r2,[r7]
-  110 00000058 4770            BX               LR
-  111 0000005A         
-  112 0000005A         LED_GAUCHE_INVERSE
-  113 0000005A 683A            ldr              r2,[r7]
-  114 0000005C F082 0220       EOR              r2,#LED_GAUCHE
-  115 00000060 603A            str              r2,[r7]
-  116 00000062 4770            BX               LR
-  117 00000064         
-  118 00000064                 END
+   75 00000028         
+   76 00000028         LED_DROIT_ON
+   77 00000028         ;Enable sortie PWM0 (bit 0), p1145 
+   78 00000028 683A            ldr              r2,[r7]
+   79 0000002A F042 0210       ORR              r2,#LED_DROITE
+   80 0000002E 603A            str              r2,[r7]
+   81 00000030 4770            BX               LR
+   82 00000032         
+   83 00000032         LED_GAUCHE_ON
+   84 00000032         ;Enable sortie PWM0 (bit 0), p1145 
+   85 00000032 683A            ldr              r2,[r7]
+   86 00000034 F042 0220       ORR              r2,#LED_GAUCHE
+   87 00000038 603A            str              r2,[r7]
+   88 0000003A 4770            BX               LR
+   89 0000003C         
+   90 0000003C         LED_DROIT_OFF
+   91 0000003C         ;Enable sortie PWM0 (bit 0), p1145 
+   92 0000003C 683A            ldr              r2,[r7]
+   93 0000003E F002 0220       AND              r2,#LED_GAUCHE
+   94 00000042 603A            str              r2,[r7]
+   95 00000044 4770            BX               LR
+   96 00000046         
+   97 00000046         LED_GAUCHE_OFF
+   98 00000046         ;Enable sortie PWM0 (bit 0), p1145 
+   99 00000046 683A            ldr              r2,[r7]
+  100 00000048 F002 0210       AND              r2,#LED_DROITE
+  101 0000004C 603A            str              r2,[r7]
+  102 0000004E 4770            BX               LR
+  103 00000050         
+  104 00000050         LED_DROIT_INVERSE
+  105 00000050 683A            ldr              r2,[r7]
+  106 00000052 F082 0210       EOR              r2,#LED_DROITE
+  107 00000056 603A            str              r2,[r7]
+  108 00000058 4770            BX               LR
+  109 0000005A         
+  110 0000005A         LED_GAUCHE_INVERSE
+  111 0000005A 683A            ldr              r2,[r7]
+  112 0000005C F082 0220       EOR              r2,#LED_GAUCHE
+  113 00000060 603A            str              r2,[r7]
+  114 00000062 4770            BX               LR
+  115 00000064         
+  116 00000064                 END
               400FE108 
               40025400 
               4002551C 
@@ -193,14 +191,14 @@ ARM Macro Assembler    Page 3
               400250C0 
 Command Line: --debug --xref --diag_suppress=9931 --cpu=Cortex-M3 --apcs=interw
 ork --depend=.\config_led.d -o.\config_led.o -I.\RTE\_Target_1 -IC:\Keil_v5\ARM
+\PACK\ARM\CMSIS\5.3.0\CMSIS\Include -IC:\Keil_v5\ARM\PACK\Keil\LM3S_DFP\1.1.0\D
+evice\Include --predefine="__EVAL SETA 1" --predefine="__MICROLIB SETA 1" --pre
 
 
 
 ARM Macro Assembler    Page 4 
 
 
-\PACK\ARM\CMSIS\5.3.0\CMSIS\Include -IC:\Keil_v5\ARM\PACK\Keil\LM3S_DFP\1.1.0\D
-evice\Include --predefine="__EVAL SETA 1" --predefine="__MICROLIB SETA 1" --pre
 define="__UVISION_VERSION SETA 524" --predefine="_RTE_ SETA 1" --predefine="LM3
 S1968 SETA 1" --list=.\config_led.lst Config_Led.s
 
@@ -221,7 +219,7 @@ LED_DROIT_INVERSE 00000050
 
 Symbol: LED_DROIT_INVERSE
    Definitions
-      At line 106 in file Config_Led.s
+      At line 104 in file Config_Led.s
    Uses
       At line 36 in file Config_Led.s
 Comment: LED_DROIT_INVERSE used once
@@ -229,7 +227,7 @@ LED_DROIT_OFF 0000003C
 
 Symbol: LED_DROIT_OFF
    Definitions
-      At line 92 in file Config_Led.s
+      At line 90 in file Config_Led.s
    Uses
       At line 34 in file Config_Led.s
 Comment: LED_DROIT_OFF used once
@@ -237,7 +235,7 @@ LED_DROIT_ON 00000028
 
 Symbol: LED_DROIT_ON
    Definitions
-      At line 78 in file Config_Led.s
+      At line 76 in file Config_Led.s
    Uses
       At line 32 in file Config_Led.s
 Comment: LED_DROIT_ON used once
@@ -245,7 +243,7 @@ LED_GAUCHE_INVERSE 0000005A
 
 Symbol: LED_GAUCHE_INVERSE
    Definitions
-      At line 112 in file Config_Led.s
+      At line 110 in file Config_Led.s
    Uses
       At line 37 in file Config_Led.s
 Comment: LED_GAUCHE_INVERSE used once
@@ -253,7 +251,7 @@ LED_GAUCHE_OFF 00000046
 
 Symbol: LED_GAUCHE_OFF
    Definitions
-      At line 99 in file Config_Led.s
+      At line 97 in file Config_Led.s
    Uses
       At line 35 in file Config_Led.s
 Comment: LED_GAUCHE_OFF used once
@@ -261,7 +259,7 @@ LED_GAUCHE_ON 00000032
 
 Symbol: LED_GAUCHE_ON
    Definitions
-      At line 85 in file Config_Led.s
+      At line 83 in file Config_Led.s
    Uses
       At line 33 in file Config_Led.s
 Comment: LED_GAUCHE_ON used once
@@ -335,9 +333,9 @@ Symbol: LED_DROITE
    Definitions
       At line 17 in file Config_Led.s
    Uses
-      At line 81 in file Config_Led.s
-      At line 102 in file Config_Led.s
-      At line 108 in file Config_Led.s
+      At line 79 in file Config_Led.s
+      At line 100 in file Config_Led.s
+      At line 106 in file Config_Led.s
 
 LED_GAUCHE 00000020
 
@@ -351,9 +349,9 @@ Symbol: LED_GAUCHE
 ARM Macro Assembler    Page 2 Alphabetic symbol ordering
 Absolute symbols
 
-      At line 88 in file Config_Led.s
-      At line 95 in file Config_Led.s
-      At line 114 in file Config_Led.s
+      At line 86 in file Config_Led.s
+      At line 93 in file Config_Led.s
+      At line 112 in file Config_Led.s
 
 LED_TOUS 00000030
 

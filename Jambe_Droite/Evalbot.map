@@ -4,7 +4,7 @@ Component: ARM Compiler 5.06 update 5 (build 528) Tool: armlink [4d35e2]
 
 Section Cross References
 
-    config_bouton.o(.text) refers (Special) to jambe_droite.o(.text) for start
+    config_bouton.o(.text) refers (Special) to jambe_droite.o(.text) for loop
     config_bouton.o(.text) refers to rk_moteur.o(.text) for MOTEUR_INIT
     config_bumper.o(.text) refers (Special) to jambe_droite.o(.text) for loop
     config_bumper.o(.text) refers to config_led.o(.text) for LED_GAUCHE_OFF
@@ -46,9 +46,9 @@ Image Symbol Table
     IntDefaultHandler                        0x00000275   Thumb Code     0  startup.o(RESET)
     .text                                    0x00000278   Section      480  rk_moteur.o(.text)
     .text                                    0x00000458   Section      120  config_led.o(.text)
-    .text                                    0x000004d0   Section      136  config_bouton.o(.text)
-    .text                                    0x00000558   Section      232  config_bumper.o(.text)
-    .text                                    0x00000640   Section      176  jambe_droite.o(.text)
+    .text                                    0x000004d0   Section      152  config_bouton.o(.text)
+    .text                                    0x00000568   Section      232  config_bumper.o(.text)
+    .text                                    0x00000650   Section      176  jambe_droite.o(.text)
     STACK                                    0x20000000   Section      256  startup.o(STACK)
     StackMem                                 0x20000000   Data           0  startup.o(STACK)
 
@@ -81,12 +81,13 @@ Image Symbol Table
     BOUTTON_INIT                             0x000004d1   Thumb Code     0  config_bouton.o(.text)
     BOUTTON_DROIT_VERIF                      0x00000501   Thumb Code     0  config_bouton.o(.text)
     BOUTTON_GAUCHE_VERIF                     0x00000517   Thumb Code     0  config_bouton.o(.text)
-    BUMPER_INIT                              0x00000559   Thumb Code     0  config_bumper.o(.text)
-    BUMPER_DROIT_VERIF                       0x00000589   Thumb Code     0  config_bumper.o(.text)
-    BUMPER_GAUCHE_VERIF                      0x0000059f   Thumb Code     0  config_bumper.o(.text)
-    __main                                   0x00000641   Thumb Code     0  jambe_droite.o(.text)
-    start                                    0x00000655   Thumb Code     0  jambe_droite.o(.text)
-    loop                                     0x00000675   Thumb Code     0  jambe_droite.o(.text)
+    BUMPER_INIT                              0x00000569   Thumb Code     0  config_bumper.o(.text)
+    BUMPER_DROIT_VERIF                       0x00000599   Thumb Code     0  config_bumper.o(.text)
+    BUMPER_GAUCHE_VERIF                      0x000005af   Thumb Code     0  config_bumper.o(.text)
+    __main                                   0x00000651   Thumb Code     0  jambe_droite.o(.text)
+    start                                    0x00000665   Thumb Code     0  jambe_droite.o(.text)
+    loop                                     0x00000685   Thumb Code     0  jambe_droite.o(.text)
+    wait1                                    0x000006d5   Thumb Code     0  jambe_droite.o(.text)
     __initial_sp                             0x20000100   Data           0  startup.o(STACK)
 
 
@@ -97,26 +98,26 @@ Memory Map of the image
 
   Image Entry point : 0x0000026d
 
-  Load Region LR_1 (Base: 0x00000000, Size: 0x000006f0, Max: 0xffffffff, ABSOLUTE)
+  Load Region LR_1 (Base: 0x00000000, Size: 0x00000700, Max: 0xffffffff, ABSOLUTE)
 
-    Execution Region ER_RO (Exec base: 0x00000000, Load base: 0x00000000, Size: 0x000006f0, Max: 0xffffffff, ABSOLUTE)
+    Execution Region ER_RO (Exec base: 0x00000000, Load base: 0x00000000, Size: 0x00000700, Max: 0xffffffff, ABSOLUTE)
 
     Exec Addr    Load Addr    Size         Type   Attr      Idx    E Section Name        Object
 
     0x00000000   0x00000000   0x00000278   Code   RO           20  * RESET               startup.o
     0x00000278   0x00000278   0x000001e0   Code   RO            1  * .text               rk_moteur.o
     0x00000458   0x00000458   0x00000078   Code   RO            6  * .text               config_led.o
-    0x000004d0   0x000004d0   0x00000088   Code   RO            9  * .text               config_bouton.o
-    0x00000558   0x00000558   0x000000e8   Code   RO           12  * .text               config_bumper.o
-    0x00000640   0x00000640   0x000000b0   Code   RO           15  * .text               jambe_droite.o
+    0x000004d0   0x000004d0   0x00000098   Code   RO            9  * .text               config_bouton.o
+    0x00000568   0x00000568   0x000000e8   Code   RO           12  * .text               config_bumper.o
+    0x00000650   0x00000650   0x000000b0   Code   RO           15  * .text               jambe_droite.o
 
 
-    Execution Region ER_RW (Exec base: 0x20000000, Load base: 0x000006f0, Size: 0x00000000, Max: 0xffffffff, ABSOLUTE)
+    Execution Region ER_RW (Exec base: 0x20000000, Load base: 0x00000700, Size: 0x00000000, Max: 0xffffffff, ABSOLUTE)
 
     **** No section assigned to this execution region ****
 
 
-    Execution Region ER_ZI (Exec base: 0x20000000, Load base: 0x000006f0, Size: 0x00000100, Max: 0xffffffff, ABSOLUTE)
+    Execution Region ER_ZI (Exec base: 0x20000000, Load base: 0x00000700, Size: 0x00000100, Max: 0xffffffff, ABSOLUTE)
 
     Exec Addr    Load Addr    Size         Type   Attr      Idx    E Section Name        Object
 
@@ -130,15 +131,15 @@ Image component sizes
 
       Code (inc. data)   RO Data    RW Data    ZI Data      Debug   Object Name
 
-       136         16          0          0          0        276   config_bouton.o
-       232         24          0          0          0        300   config_bumper.o
-       120         20          0          0          0        268   config_led.o
-       176          8          0          0          0        276   jambe_droite.o
-       480        112          0          0          0        408   rk_moteur.o
-       632        622          0          0        256        228   startup.o
+       152         16          0          0          0        288   config_bouton.o
+       232         24          0          0          0        308   config_bumper.o
+       120         20          0          0          0        276   config_led.o
+       176          8          0          0          0        288   jambe_droite.o
+       480        112          0          0          0        420   rk_moteur.o
+       632        622          0          0        256        244   startup.o
 
     ----------------------------------------------------------------------
-      1776        802          0          0        256       1756   Object Totals
+      1792        802          0          0        256       1824   Object Totals
          0          0          0          0          0          0   (incl. Generated)
          0          0          0          0          0          0   (incl. Padding)
 
@@ -153,15 +154,15 @@ Image component sizes
 
       Code (inc. data)   RO Data    RW Data    ZI Data      Debug   
 
-      1776        802          0          0        256       1756   Grand Totals
-      1776        802          0          0        256       1756   ELF Image Totals
-      1776        802          0          0          0          0   ROM Totals
+      1792        802          0          0        256       1824   Grand Totals
+      1792        802          0          0        256       1824   ELF Image Totals
+      1792        802          0          0          0          0   ROM Totals
 
 ==============================================================================
 
-    Total RO  Size (Code + RO Data)                 1776 (   1.73kB)
+    Total RO  Size (Code + RO Data)                 1792 (   1.75kB)
     Total RW  Size (RW Data + ZI Data)               256 (   0.25kB)
-    Total ROM Size (Code + RO Data + RW Data)       1776 (   1.73kB)
+    Total ROM Size (Code + RO Data + RW Data)       1792 (   1.75kB)
 
 ==============================================================================
 
